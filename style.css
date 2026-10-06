@@ -1,0 +1,221 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: #000 url('fundo.png') no-repeat center center fixed;
+    background-size: cover; 
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+h1, h2, h3, h4 {
+    color: #daa520;
+    margin: 0 0 10px 0;
+}
+
+button {
+    background-color: #daa520;
+    border: none;
+    padding: 10px 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #fff;
+}
+
+a {
+    color: #daa520;
+    text-decoration: none;
+}
+header {
+    background-color: #111;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 1px solid #222;
+}
+
+header h1 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.menu-principal ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.menu-principal li {
+    position: relative;
+}
+
+.menu-principal a {
+    font-weight: bold;
+    padding: 8px 12px;
+    display: block;
+    cursor: pointer;
+}
+
+.menu-principal a:hover {
+    background-color: #222;
+    border-radius: 4px;
+}
+.dropdown-content {
+    display: none !important; 
+    position: absolute;
+    background-color: #111;
+    min-width: 260px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.6);
+    border: 1px solid #222;
+    border-radius: 4px;
+    z-index: 10;
+    top: 100%;
+    right: 0;
+    padding: 10px 0;
+}
+.dropdown-content.mostrar-submenu {
+    display: block !important;
+}
+
+.dropdown-content li {
+    padding: 8px 15px;
+    color: #fff;
+    font-size: 14px;
+    border-bottom: 1px solid #222;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.dropdown-content li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content li strong {
+    color: #daa520;
+}
+.dropdown-content li a.email-link {
+    display: inline !important;
+    padding: 0 !important;
+    color: #fff !important;
+    font-weight: normal !important;
+}
+
+.dropdown-content li a.email-link:hover {
+    background-color: transparent !important;
+    text-decoration: underline !important;
+    color: #daa520 !important;
+}
+main {
+    flex: 1; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px; 
+}
+
+footer {
+    background-color: #111;
+    text-align: center;
+    padding: 20px;
+    color: #daa520;
+    font-size: 14px;
+    width: 100%;
+    border-top: 1px solid #222;
+}
+#mainc{
+    max-width: 420px;
+    width: 100%;
+    height: auto !important; 
+    border: 1px solid #222;
+    border-radius: 10px;
+    padding: 30px; 
+    background-color: rgba(17, 17, 17, 0.85);  
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+    text-align: center;
+    align-self: center; 
+    margin-top: -45px;
+}
+#mainlogin {
+    max-width: 420px;
+    width: 100%;
+    height: auto !important; 
+    border: 1px solid #222;
+    border-radius: 10px;
+    padding: 30px; 
+    background-color: rgba(17, 17, 17, 0.85);  
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+    text-align: center;
+    align-self: center; 
+    margin-top: -50px;
+}
+#mainc form, #mainlogin form {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    background-color: #222;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+main ul {
+    margin: 15px 0;
+    padding-left: 0;
+    list-style-position: inside;
+}
+
+main ul li {
+    margin-bottom: 8px;
+    color: #ccc;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: rgba(17, 17, 17, 0.9);
+}
+
+table th, table td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    color: #daa520;
+    background-color: #1a1a1a;
+}
+

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OVERALL BARBER - Agendamento</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <header>
+        <h1>OVERALL BARBER</h1>
+        <nav class="menu-principal">
+            <ul>
+                <li><a href="siteprincipal.html">Inicio</a></li>
+                <li><a href="cadastro.html">Cadastro</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li>
+                    <a class="dropdown-toggle">Contato ▾</a>
+                    <ul class="dropdown-content">
+                        <li><strong>Telefone:</strong> (32)9839-1011</li>
+                        <li><strong>E-mail:</strong> <a href="mailto:contato@overallbarber.com" class="email-link">contato@overallbarber.com</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle">Sobre ▾</a>
+                    <ul class="dropdown-content">
+                        <li><strong>Endereço:</strong> Rua José Luiz de Freitas, n115, loja 3</li>
+                        <li><strong>Barbeiros:</strong> Vinicius e Matheus</li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container-agendamento">   
+            <form id="formReserva">
+                <div class="caixa-tabelas-lado-a-lado">
+                    <div class="coluna-tabela">
+                        <h2 class="titulo-secao">1. Marque seu horário</h2>
+                        <div class="tabela-responsiva">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>horario</th>
+                                        <th>seg</th>
+                                        <th>ter</th>
+                                        <th>qua</th>
+                                        <th>qui</th>
+                                        <th>sex</th>
+                                        <th>sab</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelaHorariosCorpo"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="coluna-tabela">
+                        <h2 class="titulo-secao">2. Selecione o Estilo de Corte</h2>
+                        <div class="tabela-responsiva">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Selecionar</th>
+                                        <th>Estilo / Serviço</th>
+                                        <th>Preço</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="radio" name="corte" value="Corte Masculino Simples" required></td>
+                                        <td>Corte Masculino Simples</td>
+                                        <td class="preco-dourado">R$ 30,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="corte" value="Corte Degradê / Moderno"></td>
+                                        <td>Corte Degradê / Moderno</td>
+                                        <td class="preco-dourado">R$ 35,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="corte" value="Barba Completa (Terapia)"></td>
+                                        <td>Barba Completa (Terapia)</td>
+                                        <td class="preco-dourado">R$ 25,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="corte" value="Combo: Corte + Barba"></td>
+                                        <td>Combo: Corte + Barba</td>
+                                        <td class="preco-dourado">R$ 50,00</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="radio" name="corte" value="Sobrancelha / Acabamento"></td>
+                                        <td>Sobrancelha / Acabamento</td>
+                                        <td class="preco-dourado">R$ 10,00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="secao-botao-envio">
+                    <button type="submit">Enviar Agendamento</button>
+                </div>
+                
+            </form>
+
+        </div>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <h4>&copy;2026 Todos os direitos reservados. Josias e Guilherme.O</h4>
+            <span id="data-atual" class="data-timer"></span>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
