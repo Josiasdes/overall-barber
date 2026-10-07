@@ -11,18 +11,18 @@
         <h1>OVERALL BARBER</h1>
         <nav class="menu-principal">
             <ul>
-                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html">Início</a></li>
                 <li><a href="cadastro.html">Cadastro</a></li>
                 <li><a href="login.html">Login</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" href="#">Contato ▾</a>
+                <li>
+                    <a class="dropdown-toggle">Contato ▾</a>
                     <ul class="dropdown-content">
                         <li><strong>Telefone:</strong> (32)9839-1011</li>
-                        <li><strong>E-mail:</strong> <a href="mailto:contato@://overallbarber.com" class="email-link">contato@overallbarber.com</a></li>
+                        <li><strong>E-mail:</strong> <a href="mailto:contato@overallbarber.com" class="email-link">contato@overallbarber.com</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" href="#">Sobre ▾</a>
+                <li>
+                    <a class="dropdown-toggle">Sobre ▾</a>
                     <ul class="dropdown-content">
                         <li><strong>Endereço:</strong> Rua José Luiz de Freitas, n115, loja 3</li>
                         <li><strong>Barbeiros:</strong> Vinicius e Matheus</li>
@@ -35,23 +35,29 @@
     <main>
         <div id="mainlogin">
             <h2>Login</h2>
+            
             <form id="formLogin">
                 <div class="form-group">
                     <label for="loginEmail">Digite seu email:</label>
-                    <input type="email" id="loginEmail" required>
+                    <input type="email" id="loginEmail" placeholder="exemplo@email.com" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="loginSenha">Digite sua senha:</label>
-                    <input type="password" id="loginSenha" required>
+                    <label for="loginPassword">Digite sua senha:</label>
+                    <input type="password" id="loginPassword" placeholder="Sua senha" required>
                 </div>
+                
                 <button type="submit">Entrar</button>
             </form>
-            <p><a href="cadastro.html">Não possui uma conta? Criar uma conta</a></p>
+            
+            <p id="plogin">
+                Não possui uma conta? <a href="cadastro.html">Criar uma conta</a>
+            </p>
         </div>
     </main>
 
     <footer>
-        <h4>©2026 Todos os direitos reservados. Josias e Guilherme.O</h4>
+        <h4 id="texto-footer">©2026 Todos os direitos reservados. Josias e Guilherme.O</h4>
     </footer>
 
     <script src="script.js"></script>

@@ -1,4 +1,3 @@
-
 html, body {
     height: 100%;
     margin: 0;
@@ -79,6 +78,7 @@ header h1 {
     background-color: #222;
     border-radius: 4px;
 }
+
 .dropdown-content {
     display: none !important; 
     position: absolute;
@@ -92,6 +92,7 @@ header h1 {
     right: 0;
     padding: 10px 0;
 }
+
 .dropdown-content.mostrar-submenu {
     display: block !important;
 }
@@ -112,6 +113,7 @@ header h1 {
 .dropdown-content li strong {
     color: #daa520;
 }
+
 .dropdown-content li a.email-link {
     display: inline !important;
     padding: 0 !important;
@@ -141,7 +143,7 @@ footer {
     width: 100%;
     border-top: 1px solid #222;
 }
-#mainc{
+#mainc, #mainlogin {
     max-width: 420px;
     width: 100%;
     height: auto !important; 
@@ -152,21 +154,16 @@ footer {
     box-shadow: 0 4px 20px rgba(0,0,0,0.7);
     text-align: center;
     align-self: center; 
+}
+
+#mainc {
     margin-top: -45px;
 }
+
 #mainlogin {
-    max-width: 420px;
-    width: 100%;
-    height: auto !important; 
-    border: 1px solid #222;
-    border-radius: 10px;
-    padding: 30px; 
-    background-color: rgba(17, 17, 17, 0.85);  
-    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
-    text-align: center;
-    align-self: center; 
     margin-top: -50px;
 }
+
 #mainc form, #mainlogin form {
     display: block;
 }
@@ -191,6 +188,7 @@ footer {
     border-radius: 5px;
     box-sizing: border-box;
 }
+
 main ul {
     margin: 15px 0;
     padding-left: 0;
@@ -201,6 +199,36 @@ main ul li {
     margin-bottom: 8px;
     color: #ccc;
 }
+.container-agendamento {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.caixa-tabelas-lado-a-lado {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.coluna-tabela {
+    flex: 1;
+    min-width: 320px;
+    background-color: rgba(17, 17, 17, 0.85);  
+    border: 1px solid #222;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+}
+
+.titulo-secao {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -217,5 +245,42 @@ table th, table td {
 table th {
     color: #daa520;
     background-color: #1a1a1a;
+}
+
+.preco-dourado {
+    color: #daa520;
+    font-weight: bold;
+}
+.secao-botao-envio {
+    text-align: center;
+    background-color: rgba(17, 17, 17, 0.85);
+    border: 1px solid #222;
+    border-radius: 10px;
+    padding: 25px;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+}
+
+label {
+    color: #fff;
+    text-align: center;
+    display: block;
+}
+
+#corte {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    background-color: #222;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 5px;
+    margin: 10px 0 20px 0;
+    text-align: center;
+    box-sizing: border-box;
+}
+#plogin{
+      color: #daa520;
 }
 
