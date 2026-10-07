@@ -61,6 +61,7 @@ header h1 {
     padding: 0;
     display: flex;
     gap: 20px;
+    align-items: center; /* Garante alinhamento vertical no menu */
 }
 
 .menu-principal li {
@@ -284,3 +285,16 @@ label {
       color: #daa520;
 }
 
+.menu-principal .button-inicio {
+    background-color: #daa520;
+    color: #000 !important;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.menu-principal .button-inicio:hover {
+    background-color: #fff !important;
+    color: #000 !important;
+}

@@ -45,7 +45,7 @@ if (formCadastro) {
         const nomeArquivoBase = nomeCadastrado.toLowerCase().replace(/\s+/g, '_');
 
         const conteudoJson = JSON.stringify(dadosUsuario, null, 4);
-        fazerDownload(conteudoJson, `cadastro_${nomeArquivoBase}.json`, 'application/json;charset=utf-8');
+        fazerDownload(conteudoJson, `cadastro_${nomeArquivoBase}.txt`, 'text/plain;charset=utf-8');
 
         const conteudoTxt = `--- NOVO CADASTRO - OVERALL BARBER ---\nNome: ${nomeCadastrado}\nCPF: ${cpfCadastrado}\nEndereço: ${enderecoCadastrado}\nE-mail: ${emailCadastrado}\nSenha: ${senhaCadastrada}\n-------------------------------------`;
         fazerDownload(conteudoTxt, `cadastro_${nomeArquivoBase}.txt`, 'text/plain;charset=utf-8');
@@ -61,7 +61,6 @@ const inputLoginEmail = document.getElementById('loginEmail');
 const inputLoginPassword = document.getElementById('loginPassword');
 
 if (formLogin) {
-
     const dadosSalvos = localStorage.getItem('usuarioCadastroJSON');
     if (dadosSalvos) {
         const usuario = JSON.parse(dadosSalvos);
@@ -85,6 +84,8 @@ if (formLogin) {
             if (emailDigitado === usuario.email && senhaDigitada === usuario.senha) {
                 alert(`Bem-vindo de volta, ${usuario.nome}!`);
 
+                localStorage.setItem('usuarioLogado', 'true');
+
                 window.location.href = "siteprincipal.html"; 
             } else {
                 alert('E-mail ou senha incorretos.');
@@ -93,6 +94,14 @@ if (formLogin) {
             alert('Nenhum usuário cadastrado encontrado. Por favor, cadastre-se primeiro.');
         }
     });
+}
+
+if (window.location.pathname.includes('siteprincipal.html')) {
+    const logado = localStorage.getItem('usuarioLogado');
+    if (logado !== 'true') {
+        alert('Acesso negado. Por favor, faça login para acessar a página principal.');
+        window.location.href = "login.html";
+    }
 }
 
 const tabelaHorariosCorpo = document.getElementById('tabelaHorariosCorpo');
@@ -151,7 +160,6 @@ if (formReserva) {
 
         servicosSelecionados.forEach(servico => {
             const linha = servico.closest('tr');
-            // CORREÇÃO: Adicionado o índice [1] para ler o nome do serviço corretamente na tabela
             if (linha && linha.cells.length > 1) {
                 const nomeServicoText = linha.cells[1].textContent.trim();
                 nomesServicosTxt.push(nomeServicoText);
@@ -213,7 +221,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const elementoFooter = document.getElementById('texto-footer');
     
     if (elementoFooter) {
-        // Obtém a data atual do sistema
         const dataAtual = new Date();
         const anoAtual = dataAtual.getFullYear();
 
@@ -223,4 +230,3 @@ document.addEventListener("DOMContentLoaded", function() {
         elementoFooter.innerHTML = `©${anoAtual} Todos os direitos reservados. Josias e Guilherme.O <br> <span style="font-size: 12px; color: #ccc;">Hoje é ${dataFormatada}</span>`;
     }
 });
-
