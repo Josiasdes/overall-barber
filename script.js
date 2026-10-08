@@ -21,18 +21,12 @@ document.addEventListener('click', function() {
     });
 });
 
-// =========================================================================
-// INTERVENÇÃO PROGRAMADA: MONITORAÇÃO E FILTRO DO INPUT DE CPF
-// =========================================================================
+// VALIDAÇÃO DO INPUT DE CPF (APENAS NÚMEROS E MÁXIMO 11 DÍGITOS)
 document.addEventListener('input', function(event) {
-    const elemento = event.target;
-    if (elemento && elemento.id === 'cpf') {
-        // Remove qualquer caractere digitado que não seja um número
-        elemento.value = elemento.value.replace(/\D/g, '');
-        
-        // Delimita o tamanho máximo de caracteres estritamente para 11 dígitos
-        if (elemento.value.length > 11) {
-            elemento.value = elemento.value.slice(0, 11);
+    if (event.target && event.target.id === 'cpf') {
+        event.target.value = event.target.value.replace(/\D/g, '');
+        if (event.target.value.length > 11) {
+            event.target.value = event.target.value.slice(0, 11);
         }
     }
 });
@@ -40,19 +34,22 @@ document.addEventListener('input', function(event) {
 const formCadastro = document.getElementById('formCadastro');
 if (formCadastro) {
     formCadastro.addEventListener('submit', function(event) {
+        const cpfInput = document.getElementById('cpf');
+        const cpfCadastrado = cpfInput ? cpfInput.value : "";
+        
+        // Impede o envio se não tiver exatamente 11 números
+        if (cpfCadastrado.length !== 11) {
+            event.preventDefault();
+            alert('O CPF deve conter exatamente 11 números.');
+            return;
+        }
+
         event.preventDefault();
         
         const nomeCadastrado = document.getElementById('name').value;
-        const cpfCadastrado = document.getElementById('cpf').value;
         const enderecoCadastrado = document.getElementById('endereco').value;
         const emailCadastrado = document.getElementById('email').value;
         const senhaCadastrada = document.getElementById('password').value;
-
-        // Validação preventiva no envio do cadastro para assegurar tamanho padrão do CPF
-        if (cpfCadastrado.length !== 11) {
-            alert('Por favor, digite um CPF válido contendo exatamente 11 números.');
-            return;
-        }
 
         const dadosUsuario = {
             nome: nomeCadastrado, 
@@ -126,7 +123,34 @@ if (window.location.pathname.includes('siteprincipal.html')) {
     }
 }
 
+const tabelaHorariosCorpo = document.getElementById('tabelaHorariosCorpo');
 const inputCorte = document.getElementById('corte');
+
+if (tabelaHorariosCorpo) {
+    const listaHorarios = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
+    const diasSemana = ["seg", "ter", "qua", "qui", "sex", "sab"];
+
+    listaHorarios.forEach(horario => {
+        const tr = document.createElement('tr');
+        
+        const tdHorario = document.createElement('td');
+        tdHorario.textContent = horario;
+        tr.appendChild(tdHorario);
+
+        diasSemana.forEach(dia => {
+            const tdDia = document.createElement('td');
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'horario_selecionado'; 
+            radio.value = `${dia.toUpperCase()} às ${horario}`;
+
+            tdDia.appendChild(radio);
+            tr.appendChild(tdDia);
+        });
+
+        tabelaHorariosCorpo.appendChild(tr);
+    });
+}
 
 // LÓGICA DE TRAVA DOS CHECKBOXES (FILTRADO PELO ID "servicos")
 document.addEventListener('change', function(event) {
@@ -194,62 +218,14 @@ if (formReserva) {
             if (linha && linha.cells.length > 1) {
                 const nomeServicoText = linha.cells[1].textContent.trim();
                 nomesServicosTxt.push(nomeServicoText);
-            } else {
-                nomesServicosTxt.push("Serviço Selecionado");
-            }
-            
-            const precoAttr = servico.getAttribute('data-preco');
-            if (precoAttr) {
-                valorTotal += parseFloat(precoAttr);
-            } else if (linha && linha.cells.length > 2) {
-                const textoPreco = linha.cells[2].textContent;
-                const precoLimpo = textoPreco.replace('R$', '').replace('.', '').replace(',', '.').trim();
-                valorTotal += parseFloat(precoLimpo) || 0;
+                
+                const precoAtributo = parseFloat(servico.getAttribute('data-preco'));
+                if (!isNaN(precoAtributo)) {
+                    valorTotal += precoAtributo;
+                }
             }
         });
 
-        let nomeCliente = "Cliente";
-        const dadosUsuarioSalvos = localStorage.getItem('usuarioCadastroJSON');
-        if (dadosUsuarioSalvos) {
-            const usuarioObj = JSON.parse(dadosUsuarioSalvos);
-            nomeCliente = usuarioObj.nome || "Cliente";
-        }
-
-        const conteudoTxt = `--- NOVO AGENDAMENTO - OVERALL BARBER ---
-Cliente: ${nomeCliente}
-Horário Agendado: ${horarioSelecionado.value}
-Modelo/Estilo do Corte: ${estiloCorteDigitado}
-Serviços e Adicionais: ${nomesServicosTxt.join(', ')}
------------------------------------------
-VALOR FINAL SOMADO: R$ ${valorTotal.toFixed(2).replace('.', ',')}
------------------------------------------`;
-
-        const nomeArquivoAgendamento = `agendamento_${nomeCliente.toLowerCase().replace(/\s+/g, '_')}.txt`;
-        fazerDownload(conteudoTxt, nomeArquivoAgendamento, 'text/plain;charset=utf-8');
-
-        const agendamentoHistorico = {
-            cliente: nomeCliente,
-            horario: horarioSelecionado.value,
-            estilo: estiloCorteDigitado,
-            servicos: nomesServicosTxt,
-            total: valorTotal
-        };
-        localStorage.setItem('ultimoAgendamentoJSON', JSON.stringify(agendamentoHistorico));
-
-        alert('Agendamento concluído com sucesso! Recibo baixado.');
+        alert(`Agendamento enviado com sucesso!\n\nHorário: ${horarioSelecionado.value}\nServiços: ${nomesServicosTxt.join(', ')}\nCorte: ${estiloCorteDigitado}\nTotal: R$ ${valorTotal.toFixed(2).replace('.', ',')}`);
     });
-}
-
-function fazerDownload(conteudo, nomeArquivo, tipoConteudo) {
-    const blob = new Blob([conteudo], { type: tipoConteudo });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    
-    a.href = url;
-    a.download = nomeArquivo;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-URL.revokeObjectURL(url);
 }
