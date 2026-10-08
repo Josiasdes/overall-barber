@@ -21,6 +21,22 @@ document.addEventListener('click', function() {
     });
 });
 
+// =========================================================================
+// INTERVENÇÃO PROGRAMADA: MONITORAÇÃO E FILTRO DO INPUT DE CPF
+// =========================================================================
+document.addEventListener('input', function(event) {
+    const elemento = event.target;
+    if (elemento && elemento.id === 'cpf') {
+        // Remove qualquer caractere digitado que não seja um número
+        elemento.value = elemento.value.replace(/\D/g, '');
+        
+        // Delimita o tamanho máximo de caracteres estritamente para 11 dígitos
+        if (elemento.value.length > 11) {
+            elemento.value = elemento.value.slice(0, 11);
+        }
+    }
+});
+
 const formCadastro = document.getElementById('formCadastro');
 if (formCadastro) {
     formCadastro.addEventListener('submit', function(event) {
@@ -31,6 +47,12 @@ if (formCadastro) {
         const enderecoCadastrado = document.getElementById('endereco').value;
         const emailCadastrado = document.getElementById('email').value;
         const senhaCadastrada = document.getElementById('password').value;
+
+        // Validação preventiva no envio do cadastro para assegurar tamanho padrão do CPF
+        if (cpfCadastrado.length !== 11) {
+            alert('Por favor, digite um CPF válido contendo exatamente 11 números.');
+            return;
+        }
 
         const dadosUsuario = {
             nome: nomeCadastrado, 
@@ -104,43 +126,56 @@ if (window.location.pathname.includes('siteprincipal.html')) {
     }
 }
 
-const tabelaHorariosCorpo = document.getElementById('tabelaHorariosCorpo');
 const inputCorte = document.getElementById('corte');
 
-if (tabelaHorariosCorpo) {
-    const listaHorarios = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"];
-    const diasSemana = ["seg", "ter", "qua", "qui", "sex", "sab"];
+// LÓGICA DE TRAVA DOS CHECKBOXES (FILTRADO PELO ID "servicos")
+document.addEventListener('change', function(event) {
+    const elemento = event.target;
+    
+    if (elemento && elemento.id === 'servicos' && elemento.type === 'checkbox') {
+        const linhaClicada = elemento.closest('tr');
+        if (!linhaClicada || linhaClicada.cells.length < 2) return;
 
-    listaHorarios.forEach(horario => {
-        const tr = document.createElement('tr');
-        
-        const tdHorario = document.createElement('td');
-        tdHorario.textContent = horario;
-        tr.appendChild(tdHorario);
+        const textoServicoClicado = linhaClicada.cells[1].textContent.trim().toLowerCase();
+        const todosCheckboxes = document.querySelectorAll('input[id="servicos"]');
 
-        diasSemana.forEach(dia => {
-            const tdDia = document.createElement('td');
-            const radio = document.createElement('input');
-            radio.type = 'radio';
-            radio.name = 'horario_selecionado'; 
-            radio.value = `${dia.toUpperCase()} às ${horario}`;
+        if (!elemento.checked) return;
 
-            tdDia.appendChild(radio);
-            tr.appendChild(tdDia);
+        todosCheckboxes.forEach(checkbox => {
+            if (checkbox === elemento) return;
+
+            const outraLinha = checkbox.closest('tr');
+            if (!outraLinha || outraLinha.cells.length < 2) return;
+
+            const textoOutroServico = outraLinha.cells[1].textContent.trim().toLowerCase();
+
+            if (textoServicoClicado.includes("combo")) {
+                if (textoOutroServico.includes("corte") || textoOutroServico.includes("barba")) {
+                    checkbox.checked = false;
+                }
+            }
+
+            if (textoServicoClicado.includes("corte") || textoServicoClicado.includes("barba")) {
+                if (textoOutroServico.includes("combo")) {
+                    checkbox.checked = false;
+                }
+            }
         });
-
-        tabelaHorariosCorpo.appendChild(tr);
-    });
-}
+    }
+});
 
 const formReserva = document.getElementById('formReserva');
 if (formReserva) {
     formReserva.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const servicosSelecionados = document.querySelectorAll('input[name="servicos"]:checked');
+        const servicosSelecionados = document.querySelectorAll('input[id="servicos"]:checked, input[name="servicos"]:checked');
         const horarioSelecionado = document.querySelector('input[name="horario_selecionado"]:checked');
-        const estiloCorteDigitado = inputCorte ? inputCorte.value.trim() : "";
+        
+        let estiloCorteDigitado = inputCorte ? inputCorte.value.trim() : "";
+        if (estiloCorteDigitado === "") {
+            estiloCorteDigitado = "Não informado";
+        }
 
         if (servicosSelecionados.length === 0) {
             alert('Por favor, selecione ao menos um serviço ou adicional nas caixas de seleção!');
@@ -148,10 +183,6 @@ if (formReserva) {
         }
         if (!horarioSelecionado) {
             alert('Por favor, escolha um dia e horário na tabela antes de enviar!');
-            return;
-        }
-        if (estiloCorteDigitado === "") {
-            alert('Por favor, digite qual o estilo ou tipo de corte que você deseja!');
             return;
         }
 
@@ -168,7 +199,13 @@ if (formReserva) {
             }
             
             const precoAttr = servico.getAttribute('data-preco');
-            valorTotal += precoAttr ? parseFloat(precoAttr) : 0;
+            if (precoAttr) {
+                valorTotal += parseFloat(precoAttr);
+            } else if (linha && linha.cells.length > 2) {
+                const textoPreco = linha.cells[2].textContent;
+                const precoLimpo = textoPreco.replace('R$', '').replace('.', '').replace(',', '.').trim();
+                valorTotal += parseFloat(precoLimpo) || 0;
+            }
         });
 
         let nomeCliente = "Cliente";
@@ -212,21 +249,7 @@ function fazerDownload(conteudo, nomeArquivo, tipoConteudo) {
     a.download = nomeArquivo;
     document.body.appendChild(a);
     a.click();
-    
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+
+URL.revokeObjectURL(url);
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-    const elementoFooter = document.getElementById('texto-footer');
-    
-    if (elementoFooter) {
-        const dataAtual = new Date();
-        const anoAtual = dataAtual.getFullYear();
-
-        const opcoes = { year: 'numeric', month: 'long', day: 'numeric' };
-        const dataFormatada = dataAtual.toLocaleDateString('pt-BR', opcoes);
-
-        elementoFooter.innerHTML = `©${anoAtual} Todos os direitos reservados. Josias e Guilherme.O <br> <span style="font-size: 12px; color: #ccc;">Hoje é ${dataFormatada}</span>`;
-    }
-});
